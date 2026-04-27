@@ -449,7 +449,7 @@
           <table>
             <thead>
               <tr>
-                <th>Departure</th>
+                <th>Date / Time</th>
                 <th>Station</th>
                 <th>Destination</th>
                 <th>Via</th>
@@ -935,8 +935,8 @@
             (record) => `
               <tr>
                 <td class="time-cell">
-                  <span class="time-main">${formatClock(record.departureTime)}</span>
-                  ${record.delayMinutes > 0 && record.estimatedTime ? `<span class="time-delay">${formatClock(record.estimatedTime)}</span>` : ""}
+                  <span class="time-main">${formatDate(record.departureTime)}</span>
+                  ${record.delayMinutes > 0 && record.estimatedTime ? `<span class="time-delay">${formatDate(record.estimatedTime)}</span>` : ""}
                 </td>
                 <td>${record.station}</td>
                 <td>${record.destination}</td>
@@ -1107,13 +1107,15 @@
         if (savedDateFrom) {
           dateFromInput.value = savedDateFrom;
         } else {
-          dateFromInput.value = toLocalInputValue(new Date());
+          dateFromInput.value = toLocalInputValue(
+            new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+          );
         }
 
         if (savedDateTo) {
           dateToInput.value = savedDateTo;
         } else {
-          dateToInput.value = toLocalInputValue(new Date(Date.now() + 24 * 60 * 60 * 1000));
+          dateToInput.value = toLocalInputValue(new Date());
         }
 
         cancelledOnlyInput.checked = savedCancelledOnly === null ? true : savedCancelledOnly === "true";
